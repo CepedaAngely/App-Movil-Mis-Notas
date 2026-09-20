@@ -40,15 +40,18 @@ export default function HomeScreen() {
         />
 
         <View style={styles.list}>
-          {notas.map((nota) => (
-            <NoteCard
-              key={nota.id}
-              title={nota.title}
-              description={nota.description}
-              status={nota.status}
-              onEliminar={() => eliminarNota(nota.id)}
-            />
-          ))}
+        {notas.map((nota) => (
+        <NoteCard
+          key={nota.id}
+          title={nota.title}
+          description={nota.description}
+          status={nota.status}
+          onEditar={() =>
+          router.push({ pathname: '/editar-nota', params: { id: nota.id } })
+        }
+          onEliminar={() => eliminarNota(nota.id)}
+       />
+        ))}
         </View>
 
       </ScrollView>

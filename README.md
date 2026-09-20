@@ -33,8 +33,7 @@ La aplicación cuenta con una pantalla principal donde se visualizan las notas y
 - [x] Visualizar listado de notas
 - [x] Crear una nueva nota
 - [x] Eliminar una nota
-- [x] Mostrar título, descripción y estado de cada nota
-- [x] Utilizar un componente reutilizable para representar las notas
+
 
 ### Previstas
 

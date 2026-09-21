@@ -2,7 +2,7 @@
 
 Aplicación móvil desarrollada como proyecto ABP para la gestión y organización de notas y tareas.
 
-La aplicación permite visualizar notas, crear nuevas notas y eliminar notas. El proyecto se irá ampliando progresivamente durante la cursada a medida que se incorporen nuevos contenidos y funcionalidades.
+La aplicación permite visualizar, crear, editar y eliminar notas, cambiar su estado y filtrarlas por estado. El proyecto se irá ampliando progresivamente durante la cursada a medida que se incorporen nuevos contenidos y funcionalidades.
 
 ## 👤 Integrante
 
@@ -18,73 +18,42 @@ Cada nota contiene:
 - Descripción
 - Estado
 
-Los estados utilizados actualmente son:
+Los estados utilizados son:
 
 - Pendiente
 - En curso
 - Hecho
 
-La aplicación cuenta con una pantalla principal donde se visualizan las notas y un formulario para crear nuevas notas.
+## ✅ Features
 
+### Completadas
 
-
-### Features Completadas
-
-- [x] Visualizar listado de notas
+- [x] Consultar el listado de notas
 - [x] Crear una nueva nota
+- [x] Editar una nota
 - [x] Eliminar una nota
-
+- [x] Cambiar el estado de una nota (Pendiente → En curso → Hecho)
+- [x] Filtrar notas por estado
 
 ### Previstas
 
-- [ ] Editar notas
-- [ ] Cambiar el estado de una nota
-- [ ] Filtrar notas por estado
-- [ ] Mejorar la organización visual del tablero
 - [ ] Incorporar persistencia de datos
 - [ ] Incorporar nuevas funcionalidades a medida que avance la cursada
 
 ## 🧩 Contenidos aplicados
 
-En esta primera versión se aplican los siguientes contenidos trabajados durante la cursada:
+- View, Text, Image, ScrollView, TextInput
+- Componentes reutilizables y props
+- useState y useContext
+- FlatList (`data`, `keyExtractor`, `renderItem`)
+- TouchableOpacity para botones personalizados
+- Íconos con `@expo/vector-icons` (Ionicons)
+- Navegación con expo-router
+- Inmutabilidad del estado con `.map()`, `.filter()` y spread operator
 
-- View
-- Text
-- Image
-- ScrollView
-- TextInput
-- Button
-- Componentes reutilizables
-- Props
-- useState
-- useContext
-- Context API
-- Navegación entre pantallas
+## ▶️ Cómo ejecutar el proyecto
 
-## 🗂️ Componente reutilizable
-
-La aplicación utiliza el componente `NoteCard`, encargado de representar cada nota dentro del listado.
-
-El componente recibe información mediante **props**, como:
-
-- `title`
-- `description`
-- `status`
-- `onEliminar`
-
-Esto permite reutilizar el mismo componente para representar todas las notas de la aplicación.
-
-## 🛠️ Tecnologías utilizadas
-
-- React Native
-- Expo
-- TypeScript
-- Expo Router
-
-## 📌 Estado actual del proyecto
-
-**Versión:** 1.0 - Unidad I
-
-La primera versión de la aplicación se encuentra funcional y cumple con los contenidos solicitados para la Unidad I.
-
-El proyecto continuará evolucionando durante la cursada mediante la incorporación progresiva de nuevas funcionalidades.
+```bash
+npm install
+npx expo start
+```

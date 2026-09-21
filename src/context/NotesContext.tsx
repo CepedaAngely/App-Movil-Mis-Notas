@@ -11,6 +11,7 @@ type NotesContextType = {
   notas: Nota[];
   agregarNota: (titulo: string, descripcion: string) => void;
   editarNota: (id: string, titulo: string, descripcion: string) => void;
+  cambiarEstado: (id: string) => void;
   eliminarNota: (id: string) => void;
 };
 
@@ -74,6 +75,26 @@ export function NotesProvider({ children }: { children: React.ReactNode }) {
     )
   );
 };
+
+  const ESTADOS = ['Pendiente', 'En curso', 'Hecho'];
+
+  const cambiarEstado = (id: string) => {
+    setNotas((notasActuales) =>
+      notasActuales.map((nota) => {
+        if (nota.id !== id) {
+          return nota; // sin cambios si no es la nota buscada
+        }
+
+        const posicion = ESTADOS.indexOf(nota.status);
+        const siguiente = ESTADOS[(posicion + 1) % ESTADOS.length];
+
+        // Spread: copia la nota y sobreescribe solo el estado
+        return { ...nota, status: siguiente };
+      })
+    );
+  };
+
+
 const eliminarNota = (id: string) => {
     setNotas((notasActuales) =>
     notasActuales.filter((nota) => nota.id !== id)
@@ -81,7 +102,7 @@ const eliminarNota = (id: string) => {
     };
 
   return (
-  <NotesContext.Provider value={{ notas, agregarNota, editarNota, eliminarNota }}>
+  <NotesContext.Provider value={{ notas, agregarNota, editarNota, cambiarEstado, eliminarNota }}>
       {children}
     </NotesContext.Provider>
   );

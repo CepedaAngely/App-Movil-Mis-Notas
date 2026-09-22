@@ -1,19 +1,19 @@
-import { useNotes } from '@/context/NotesContext';
+import { useNotesStore } from '@/store/useNotesStore';
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import {
-    Alert,
-    Button,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TextInput,
-    View,
+  Alert,
+  Button,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
 } from 'react-native';
 
 export default function CrearNotaScreen() {
   const router = useRouter();
-  const { agregarNota } = useNotes();
+  const { agregarNota } = useNotesStore();
 
   const [titulo, setTitulo] = useState('');
   const [descripcion, setDescripcion] = useState('');

@@ -1,4 +1,4 @@
-import { useNotes } from '@/context/NotesContext';
+import { useNotesStore } from '@/store/useNotesStore';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useState } from 'react';
 import {
@@ -14,7 +14,7 @@ import {
 export default function EditarNotaScreen() {
   const router = useRouter();
   const { id } = useLocalSearchParams<{ id: string }>();
-  const { notas, editarNota } = useNotes();
+  const { notas, editarNota } = useNotesStore();
 
   const nota = notas.find((n) => n.id === id);
 

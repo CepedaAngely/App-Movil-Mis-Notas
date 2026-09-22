@@ -12,13 +12,13 @@ import {
 } from 'react-native';
 
 import NoteCard from '@/components/NoteCard';
-import { useNotes } from '@/context/NotesContext';
+import { useNotesStore } from '@/store/useNotesStore';
 
 const FILTROS = ['Todas', 'Pendiente', 'En curso', 'Hecho'];
 
 export default function HomeScreen() {
   const router = useRouter();
-  const { notas, eliminarNota, cambiarEstado } = useNotes();
+  const { notas, eliminarNota, cambiarEstado } = useNotesStore();
   const [filtro, setFiltro] = useState('Todas');
 
   const notasFiltradas =

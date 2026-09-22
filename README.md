@@ -42,9 +42,12 @@ Los estados utilizados son:
 
 ## 🧩 Contenidos aplicados
 
+-## 🧩 Contenidos aplicados
+
 - View, Text, Image, ScrollView, TextInput
 - Componentes reutilizables y props
-- useState y useContext
+- useState
+- Estado global con Zustand (`create`, `set`)
 - FlatList (`data`, `keyExtractor`, `renderItem`)
 - TouchableOpacity para botones personalizados
 - Íconos con `@expo/vector-icons` (Ionicons)

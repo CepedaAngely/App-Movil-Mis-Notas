@@ -1,6 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 import {
   FlatList,
@@ -27,7 +28,7 @@ export default function HomeScreen() {
       : notas.filter((nota) => nota.status === filtro);
 
   return (
-    <View style={styles.container}>
+       <SafeAreaView style={styles.container} edges={['top']}>
       <FlatList
         data={notasFiltradas}
         keyExtractor={(item) => item.id}
@@ -101,7 +102,7 @@ export default function HomeScreen() {
           />
         )}
       />
-    </View>
+    </SafeAreaView>
   );
 }
 
@@ -112,7 +113,6 @@ const styles = StyleSheet.create({
   },
   content: {
     padding: 20,
-    paddingTop: 50,
   },
   header: {
     marginBottom: 15,

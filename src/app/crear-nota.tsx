@@ -32,7 +32,7 @@ export default function CrearNotaScreen() {
     [
       {
         text: 'OK',
-        onPress: () => router.replace('/'),
+        onPress: () => router.back(),
       },
     ]
   );
@@ -73,7 +73,7 @@ export default function CrearNotaScreen() {
 
         <Button
         title="Cancelar"
-        onPress={() => router.replace('/')}
+        onPress={() => router.back()}
          color="#666"
         />
       </View>

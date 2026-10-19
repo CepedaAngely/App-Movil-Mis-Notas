@@ -25,7 +25,7 @@ export default function EditarNotaScreen() {
     return (
       <View style={styles.container}>
         <Text style={styles.title}>No se encontró la nota</Text>
-        <Button title="Volver" onPress={() => router.replace('/')} />
+        <Button title="Volver" onPress={() => router.back()} />
       </View>
     );
   }
@@ -39,7 +39,7 @@ export default function EditarNotaScreen() {
     editarNota(nota.id, titulo, descripcion);
 
     Alert.alert('Nota actualizada', 'Los cambios se guardaron correctamente.', [
-      { text: 'OK', onPress: () => router.replace('/') },
+      { text: 'OK', onPress: () => router.back() },
     ]);
   };
 
@@ -69,7 +69,7 @@ export default function EditarNotaScreen() {
         <Button title="Guardar cambios" onPress={manejarGuardado} />
       </View>
 
-      <Button title="Cancelar" onPress={() => router.replace('/')} color="#666" />
+      <Button title="Cancelar" onPress={() => router.back()} color="#666" />
     </ScrollView>
   );
 }

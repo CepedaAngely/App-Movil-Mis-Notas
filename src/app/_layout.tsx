@@ -15,21 +15,13 @@ export default function RootLayout() {
       
         <AnimatedSplashOverlay />
 
-        <Stack>
-         
-      <Stack>
-  <Stack.Screen
-    name="crear-nota"
-    options={{ title: 'Crear nota' }}
-  />
-
-  <Stack.Screen
-    name="editar-nota"
-    options={{ title: 'Editar nota' }}
-  />
+    <Stack>
+  <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+  <Stack.Screen name="crear-nota" options={{ title: 'Crear nota' }} />
+  <Stack.Screen name="editar-nota" options={{ title: 'Editar nota' }} />
 </Stack>
           
-        </Stack>
+       
      
     </ThemeProvider>
   );

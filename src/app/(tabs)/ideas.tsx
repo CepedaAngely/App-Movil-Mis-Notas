@@ -1,13 +1,83 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { useQuery } from '@tanstack/react-query';
+import {
+    ActivityIndicator,
+    Alert,
+    FlatList,
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    View,
+} from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+
+import IdeaCard from '@/components/IdeaCard';
+import { obtenerIdeas } from '@/services/ideasApi';
+import { useNotesStore } from '@/store/useNotesStore';
 
 export default function IdeasScreen() {
+  // Selector: esta pantalla solo usa agregarNota del store
+  const agregarNota = useNotesStore((state) => state.agregarNota);
+
+  const { data, isPending, isError, error, refetch, isRefetching } = useQuery({
+    queryKey: ['ideas'],
+    queryFn: obtenerIdeas,
+  });
+
+  const agregarComoNota = (texto: string) => {
+    agregarNota(texto, 'Idea sugerida desde la pestaña Ideas.');
+    Alert.alert('Idea agregada', 'La vas a encontrar en Mis notas.');
+  };
+
+  if (isPending) {
+    return (
+      <SafeAreaView style={styles.centrado}>
+        <ActivityIndicator size="large" color="#2196f3" />
+        <Text style={styles.mensaje}>Cargando ideas...</Text>
+      </SafeAreaView>
+    );
+  }
+
+  if (isError) {
+    return (
+      <SafeAreaView style={styles.centrado}>
+        <Text style={styles.mensaje}>{error.message}</Text>
+        <TouchableOpacity style={styles.boton} onPress={() => refetch()}>
+          <Text style={styles.botonTexto}>Reintentar</Text>
+        </TouchableOpacity>
+      </SafeAreaView>
+    );
+  }
+
   return (
-    <View style={styles.container}>
-      <Text>Próximamente: ideas de tareas</Text>
-    </View>
+    <SafeAreaView style={styles.container} edges={['top']}>
+      <FlatList
+        data={data.todos}
+        keyExtractor={(item) => item.id.toString()}
+        contentContainerStyle={styles.content}
+        refreshing={isRefetching}
+        onRefresh={refetch}
+        ListHeaderComponent={
+          <View style={styles.header}>
+            <Text style={styles.title}>Ideas</Text>
+            <Text style={styles.subtitle}>Tareas sugeridas para sumar a tus notas</Text>
+          </View>
+        }
+        renderItem={({ item }) => (
+          <IdeaCard texto={item.todo} onAgregar={() => agregarComoNota(item.todo)} />
+        )}
+      />
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, alignItems: 'center', justifyContent: 'center' },
+  container: { flex: 1, backgroundColor: '#f5f5f5' },
+  content: { padding: 20 },
+  header: { marginBottom: 15 },
+  title: { fontSize: 28, fontWeight: 'bold', textAlign: 'center', marginBottom: 8 },
+  subtitle: { fontSize: 15, color: '#666666', textAlign: 'center' },
+  centrado: { flex: 1, alignItems: 'center', justifyContent: 'center', padding: 20, gap: 12 },
+  mensaje: { fontSize: 15, color: '#666666', textAlign: 'center' },
+  boton: { backgroundColor: '#2196f3', paddingVertical: 10, paddingHorizontal: 20, borderRadius: 8 },
+  botonTexto: { color: '#ffffff', fontWeight: '600' },
 });

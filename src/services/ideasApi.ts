@@ -1,4 +1,3 @@
-// Forma de cada tarea que devuelve la API
 export type Idea = {
   id: number;
   todo: string;
@@ -6,7 +5,6 @@ export type Idea = {
   userId: number;
 };
 
-// Forma de la respuesta completa
 export type RespuestaIdeas = {
   todos: Idea[];
   total: number;
@@ -15,9 +13,10 @@ export type RespuestaIdeas = {
 };
 
 const URL_IDEAS = 'https://dummyjson.com/todos';
+export const IDEAS_POR_PAGINA = 10;
 
-export async function obtenerIdeas(): Promise<RespuestaIdeas> {
-  const respuesta = await fetch(`${URL_IDEAS}?limit=10&skip=0`);
+export async function obtenerIdeas(skip: number): Promise<RespuestaIdeas> {
+  const respuesta = await fetch(`${URL_IDEAS}?limit=${IDEAS_POR_PAGINA}&skip=${skip}`);
 
   // fetch no da error por su cuenta si el servidor responde 404 o 500: hay que revisarlo
   if (!respuesta.ok) {

@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query';
+import { useInfiniteQuery } from '@tanstack/react-query';
 import {
     ActivityIndicator,
     Alert,
@@ -18,9 +18,26 @@ export default function IdeasScreen() {
   // Selector: esta pantalla solo usa agregarNota del store
   const agregarNota = useNotesStore((state) => state.agregarNota);
 
-  const { data, isPending, isError, error, refetch, isRefetching } = useQuery({
+  const {
+    data,
+    isPending,
+    isError,
+    error,
+    refetch,
+    isRefetching,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = useInfiniteQuery({
     queryKey: ['ideas'],
-    queryFn: obtenerIdeas,
+    // pageParam es el skip: cuántas ideas saltear (0, 10, 20...)
+    queryFn: ({ pageParam }) => obtenerIdeas(pageParam),
+    initialPageParam: 0,
+    // Calcula el skip de la página siguiente; undefined significa que no hay más
+    getNextPageParam: (ultimaPagina) => {
+      const siguienteSkip = ultimaPagina.skip + ultimaPagina.limit;
+      return siguienteSkip < ultimaPagina.total ? siguienteSkip : undefined;
+    },
   });
 
   const agregarComoNota = (texto: string) => {
@@ -48,20 +65,48 @@ export default function IdeasScreen() {
     );
   }
 
+  // Junta todas las páginas cargadas en una sola lista
+  const ideas = data.pages.flatMap((pagina) => pagina.todos);
+  const total = data.pages[0].total;
+
+  // Se llama al llegar cerca del final de la lista
+  const cargarMas = () => {
+    if (hasNextPage && !isFetchingNextPage) {
+      fetchNextPage();
+    }
+  };
+
+  // Lo que se muestra debajo de la última idea
+  const piePagina = () => {
+    if (isFetchingNextPage) {
+      return <ActivityIndicator style={styles.pie} color="#2196f3" />;
+    }
+    if (!hasNextPage) {
+      return <Text style={styles.fin}>No hay más ideas.</Text>;
+    }
+    return null;
+  };
+
   return (
     <SafeAreaView style={styles.container} edges={['top']}>
       <FlatList
-        data={data.todos}
+        data={ideas}
         keyExtractor={(item) => item.id.toString()}
         contentContainerStyle={styles.content}
         refreshing={isRefetching}
         onRefresh={refetch}
+        onEndReached={cargarMas}
+        onEndReachedThreshold={0.5}
         ListHeaderComponent={
           <View style={styles.header}>
             <Text style={styles.title}>Ideas</Text>
             <Text style={styles.subtitle}>Tareas sugeridas para sumar a tus notas</Text>
+            <Text style={styles.contador}>
+              Mostrando {ideas.length} de {total}
+            </Text>
           </View>
         }
+        ListFooterComponent={piePagina()}
         renderItem={({ item }) => (
           <IdeaCard texto={item.todo} onAgregar={() => agregarComoNota(item.todo)} />
         )}
@@ -76,8 +121,11 @@ const styles = StyleSheet.create({
   header: { marginBottom: 15 },
   title: { fontSize: 28, fontWeight: 'bold', textAlign: 'center', marginBottom: 8 },
   subtitle: { fontSize: 15, color: '#666666', textAlign: 'center' },
+  contador: { fontSize: 13, color: '#999999', textAlign: 'center', marginTop: 6 },
   centrado: { flex: 1, alignItems: 'center', justifyContent: 'center', padding: 20, gap: 12 },
   mensaje: { fontSize: 15, color: '#666666', textAlign: 'center' },
   boton: { backgroundColor: '#2196f3', paddingVertical: 10, paddingHorizontal: 20, borderRadius: 8 },
   botonTexto: { color: '#ffffff', fontWeight: '600' },
+  pie: { marginVertical: 20 },
+  fin: { textAlign: 'center', color: '#999999', marginVertical: 20 },
 });

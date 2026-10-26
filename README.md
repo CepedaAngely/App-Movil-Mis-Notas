@@ -47,8 +47,10 @@ La app tiene dos pestañas:
 | 1 | View, Text, Image, ScrollView, TextInput, componentes y props | `NoteCard`, `IdeaCard`, pantallas de crear y editar |
 | 2 | StyleSheet, TouchableOpacity y ThemeProvider | Estilos y botones de todas las pantallas; tema en `app/_layout.tsx` |
 | 3 | Navegación con expo-router: Stack, parámetros y Tabs | `app/_layout.tsx`, `app/(tabs)/_layout.tsx`; `editar-nota` recibe el `id` |
-| 4 | FlatList, íconos, filtros, SafeArea y paginación | Listas de notas e ideas, `SafeAreaView`, `onEndReached` |
+| 4 | FlatList, íconos, filtros, SafeArea, paginación, LinearGradient y Linking | Listas de notas e ideas, SafeAreaView, onEndReached, degradado en NoteCard, botón a la doc de la API en Ideas |`SafeAreaView`, `onEndReached` |
+
 | 5 | Estado global con Zustand, fetch y TanStack Query | `store/useNotesStore.ts`, `services/ideasApi.ts`, `useInfiniteQuery` |
+
 
 ## 🛠️ Tecnologías
 
@@ -58,6 +60,7 @@ La app tiene dos pestañas:
 - TanStack Query (datos de la API, caché y paginación)
 - react-native-safe-area-context (SafeArea)
 - @expo/vector-icons (íconos)
+- expo-linear-gradient (degradado de color por estado)
 
 ## 📂 Estructura
 

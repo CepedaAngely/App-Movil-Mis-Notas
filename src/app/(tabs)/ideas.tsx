@@ -1,12 +1,13 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
 import {
-    ActivityIndicator,
-    Alert,
-    FlatList,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  ActivityIndicator,
+  Alert,
+  FlatList,
+  Linking,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -104,6 +105,15 @@ export default function IdeasScreen() {
             <Text style={styles.contador}>
               Mostrando {ideas.length} de {total}
             </Text>
+              <TouchableOpacity
+      style={styles.docsButton}
+      onPress={() => Linking.openURL('https://dummyjson.com/docs/todos')}
+      activeOpacity={0.6}
+    >
+      <Text style={styles.docsButtonText}>Ver documentación de la API</Text>
+    </TouchableOpacity>
+
+
           </View>
         }
         ListFooterComponent={piePagina()}
@@ -122,6 +132,20 @@ const styles = StyleSheet.create({
   title: { fontSize: 28, fontWeight: 'bold', textAlign: 'center', marginBottom: 8 },
   subtitle: { fontSize: 15, color: '#666666', textAlign: 'center' },
   contador: { fontSize: 13, color: '#999999', textAlign: 'center', marginTop: 6 },
+  docsButton: {
+    marginTop: 12,
+    alignSelf: 'center',
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    borderRadius: 8,
+    backgroundColor: '#e0e0e0',
+  },
+  docsButtonText: {
+    color: '#333333',
+    fontWeight: '600',
+    fontSize: 13,
+  },
+  
   centrado: { flex: 1, alignItems: 'center', justifyContent: 'center', padding: 20, gap: 12 },
   mensaje: { fontSize: 15, color: '#666666', textAlign: 'center' },
   boton: { backgroundColor: '#2196f3', paddingVertical: 10, paddingHorizontal: 20, borderRadius: 8 },

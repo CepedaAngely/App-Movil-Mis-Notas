@@ -1,4 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
+import { LinearGradient } from 'expo-linear-gradient';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 type NoteCardProps = {
@@ -24,16 +25,20 @@ export default function NoteCard({
   onEditar,
   onEliminar,
 }: NoteCardProps) {
+  const color = COLORES_ESTADO[status] ?? '#999999';
+
   return (
-    <View style={styles.card}>
+    <LinearGradient
+      colors={[color, '#ffffff']}
+      start={{ x: 0, y: 0 }}
+      end={{ x: 0, y: 1 }}
+      style={styles.card}
+    >
       <Text style={styles.title}>{title}</Text>
       <Text style={styles.description}>{description}</Text>
 
       <TouchableOpacity
-        style={[
-          styles.statusBadge,
-          { backgroundColor: COLORES_ESTADO[status] ?? '#999999' },
-        ]}
+        style={[styles.statusBadge, { backgroundColor: color }]}
         onPress={onCambiarEstado}
         activeOpacity={0.6}
       >
@@ -60,13 +65,12 @@ export default function NoteCard({
           <Text style={styles.buttonText}>Eliminar</Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </LinearGradient>
   );
 }
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: '#ffffff',
     padding: 15,
     borderRadius: 10,
     marginBottom: 15,
@@ -80,7 +84,7 @@ const styles = StyleSheet.create({
   },
   description: {
     fontSize: 14,
-    color: '#666666',
+    color: '#444444',
     marginBottom: 10,
   },
   statusBadge: {
